@@ -1,0 +1,31 @@
+{
+  "name": "generating-jwt",
+  "version": "1.0.0",
+  "description": "A set of tools for generating JSON Web Tokens",
+  "main": "index.js",
+  "scripts": {
+    "unsigned": "ts-node make-unsigned.ts",
+    "signed-hmac": "ts-node make-signed.ts",
+    "signed-rsa": "ts-node make-signed-asym.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-vs-ciso/generating-jwt.git"
+  },
+  "keywords": [
+    "jwt"
+  ],
+  "author": "Wekoslav Stefanovski & Bozidar Spirovski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dev-vs-ciso/generating-jwt/issues"
+  },
+  "homepage": "https://github.com/dev-vs-ciso/generating-jwt#readme",
+  "dependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4"
+  }
+}

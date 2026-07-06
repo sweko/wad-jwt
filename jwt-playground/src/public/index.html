@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Playground</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>JWT Playground</h1>
+        <p class="subtitle">Generate tokens, then see the difference between <em>decoding</em> and <em>verifying</em> them.</p>
+    </header>
+
+    <main>
+        <section class="panel" id="generate-panel">
+            <h2>1. Generate</h2>
+
+            <label for="payload-select">Payload</label>
+            <select id="payload-select">
+                <option value="default">default</option>
+                <option value="sensitive">sensitive</option>
+                <option value="custom">custom JSON</option>
+            </select>
+
+            <label for="payload-json">Payload JSON <span class="hint">(editable when "custom JSON" is selected)</span></label>
+            <textarea id="payload-json" placeholder="{ &quot;sub&quot;: &quot;custom-user&quot; }" rows="10" readonly></textarea>
+
+            <label for="algorithm-select">Algorithm</label>
+            <select id="algorithm-select">
+                <option value="none">none (unsigned)</option>
+                <option value="HS256">HS256 (HMAC)</option>
+                <option value="RS256">RS256 (RSA)</option>
+            </select>
+
+            <button id="generate-button">Generate</button>
+
+            <label for="generated-token">Token</label>
+            <textarea id="generated-token" rows="4" readonly></textarea>
+            <button id="use-token-button">Send to Inspect &darr;</button>
+        </section>
+
+        <section class="panel" id="inspect-panel">
+            <h2>2. Inspect</h2>
+
+            <label for="inspect-token">Token to inspect</label>
+            <textarea id="inspect-token" rows="4" placeholder="Paste any JWT here"></textarea>
+            <button id="inspect-button">Inspect</button>
+
+            <div class="results">
+                <div class="result-block">
+                    <h3>Decoded (no key required)</h3>
+                    <pre id="decode-output">-</pre>
+                </div>
+                <div class="result-block">
+                    <h3>Verified (cryptographic check)</h3>
+                    <table id="verify-table">
+                        <tbody>
+                            <tr><td>none</td><td id="verify-none">-</td></tr>
+                            <tr><td>HS256</td><td id="verify-hs256">-</td></tr>
+                            <tr><td>RS256</td><td id="verify-rs256">-</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" id="server-panel">
+            <h2>Server internals</h2>
+            <p class="subtitle">What the verifier actually knows, for reference.</p>
+            <label>HMAC secret</label>
+            <pre id="server-secret">-</pre>
+            <label>RSA public key</label>
+            <pre id="server-public-key">-</pre>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

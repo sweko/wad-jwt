@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEV vs CISO Login Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="banner">
+        <span class="dev">DEV</span> vs <span class="ciso">CISO</span>
+    </div>
+    <div class="sub-banner">
+        Implementing JSON Web Tokens
+    </div>
+    <div class="login-container" id="login-container">
+        <h2>Hack me if you can</h2>
+        <form id="login-form">
+            <div class="input-group">
+                <input type="text" id="username" required placeholder=" ">
+                <label for="username">Username</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" required placeholder=" ">
+                <label for="password">Password</label>
+            </div>
+            <button id="login-button">Log In</button>
+        </form>
+    </div>
+
+    <div class="login-container" id="anon-container">
+        <h2>Hack me if you can</h2>
+        <div>
+            I don't know who you are! I don't know what you want! If you are looking for ransom, I can tell you I don't have money. But what I do have are a very particular set of skills, skills I have acquired over a very long career. Skills that make me a nightmare for people like you. If you let my daughter go now, that'll be the end of it. I will not look for you, I will not pursue you. But if you don't, I will look for you, I will find you...
+        </div>
+    </div>
+
+    <div class="login-container" id="logged-container">
+        <h2 id="user-title">Welcome, #firstName #lastName.</h2>
+        <div id="user-details">
+            You are logged in as a #role. Your email is #email, and your secret information is #secret
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@ function fromBase64Url(str: string): Buffer {
 }
 
 // Same secret as generating-jwt/jwt-signed-sym.ts, kept in memory for the life of this process.
-const HMAC_SECRET = 'my-apicon-secret';
+const HMAC_SECRET = 'we-are-secret-developers'; // please, use a better secret key and keep it safe!
 
 const { publicKey: RSA_PUBLIC_KEY, privateKey: RSA_PRIVATE_KEY } = crypto.generateKeyPairSync('rsa', {
   modulusLength: 2048,

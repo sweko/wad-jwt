@@ -31,8 +31,9 @@ combining multiple stacked bugs in one broken auth service.
   - [expiry-management-jwt/](exercises/expiry-management-jwt/) — token expiration & refresh-token
     reuse lab (port 3003)
   - [kid-injection-jwt/](exercises/kid-injection-jwt/) — `kid` header path-traversal lab (port 3004)
-  - [jku-ssrf-jwt/](exercises/jku-ssrf-jwt/) — `jku` header SSRF lab (port 3005), plus a companion
-    `attacker-key-host/` app (port 3006) for forging tokens against a self-hosted key
+  - [jku-ssrf-jwt/application/](exercises/jku-ssrf-jwt/application/) — `jku` header SSRF lab
+    (port 3005), plus a companion [attacker-key-host/](exercises/jku-ssrf-jwt/attacker-key-host/)
+    app (port 3006) for forging tokens against a self-hosted key
 
 Each project is an independent Node.js/TypeScript package with its own `package.json`.
 

@@ -9,10 +9,9 @@
 <body>
     <header>
         <h1><span class="prompt">root@attacker-key-host</span><span class="path">:~$</span> ./forge<span class="cursor">_</span></h1>
-        <p class="subtitle"># local-only tool. paste a token to copy its payload, edit it, then sign a new
-            one with this host's own key. only <code>/.well-known/jwks.json</code> is meant to ever be
-            internet-facing — this signing UI reads the private key from disk and must never be deployed
-            publicly.</p>
+        <p class="subtitle"># paste a token to copy its payload, edit it, then sign a new one with this
+            host's own key. the private key backing this lives on this instance and never leaves it —
+            only the forged tokens this UI produces do.</p>
     </header>
 
     <main>

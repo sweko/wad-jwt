@@ -9,7 +9,12 @@ import * as path from 'path';
 const KEYS_DIR = path.join(__dirname, '..', 'keys');
 const KID = 'attacker-key-1';
 const PORT = process.env.PORT || 3006;
-const JKU = `http://localhost:${PORT}/.well-known/jwks.json`;
+// Defaults to localhost for the fully-local demo. When the victim app is
+// deployed elsewhere (e.g. Render), it needs to reach this key host over the
+// public internet, so point JKU_BASE_URL at wherever this host is actually
+// publicly reachable: JKU_BASE_URL=https://attacker-key-host.onrender.com npm run forge
+const JKU_BASE = process.env.JKU_BASE_URL || `http://localhost:${PORT}`;
+const JKU = `${JKU_BASE}/.well-known/jwks.json`;
 
 function toBase64(str: string): string {
   return Buffer.from(str).toString('base64url');

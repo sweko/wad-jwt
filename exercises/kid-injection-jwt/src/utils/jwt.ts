@@ -10,17 +10,18 @@ import { VerificationResult } from './user';
 const KEYS_DIR = path.join(__dirname, '..', '..', 'keys');
 const DEFAULT_KID = 'hs256-primary.key';
 
-function toBase64(str: string): string {
-  return Buffer.from(str).toString('base64')
+function toBase64(input: string | Buffer): string {
+  const buf = Buffer.isBuffer(input) ? input : Buffer.from(input, 'utf8');
+  return buf.toString('base64')
     .replace(/=/g, '')
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
 }
 
-function hmac(data: string, secret: string, algorithm: string): string {
+function hmac(data: string, secret: string, algorithm: string): Buffer {
   return crypto.createHmac(algorithm, secret)
     .update(data)
-    .digest('base64');
+    .digest();
 }
 
 // Looks up the key file for a given kid. The kid is used to build a file path

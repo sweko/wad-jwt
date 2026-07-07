@@ -1,17 +1,18 @@
 import * as crypto from 'crypto';
 import { VerificationResult } from './user';
 
-function toBase64(str: string): string {
-  return Buffer.from(str).toString('base64')
+function toBase64(input: string | Buffer): string {
+  const buf = Buffer.isBuffer(input) ? input : Buffer.from(input, 'utf8');
+  return buf.toString('base64')
     .replace(/=/g, '')
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
 }
 
-function hmac(data: string, secret: string, algorithm: string): string {
+function hmac(data: string, secret: string, algorithm: string): Buffer {
   return crypto.createHmac(algorithm, secret)
     .update(data)
-    .digest('base64');
+    .digest();
 }
 
 function getKey(): string {

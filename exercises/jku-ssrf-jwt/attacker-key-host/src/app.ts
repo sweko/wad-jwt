@@ -22,5 +22,6 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Attacker key host listening on port ${port}`);
-  console.log(`jku URL to use in a forged token: http://localhost:${port}/.well-known/jwks.json`);
+  const jkuBase = process.env.JKU_BASE_URL || `http://localhost:${port}`;
+  console.log(`jku URL to use in a forged token: ${jkuBase}/.well-known/jwks.json`);
 });

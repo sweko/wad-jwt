@@ -4,31 +4,31 @@ import { PasswordService } from "./password";
 export const users : User[] = [
     {
         id: 1,
+        email: 'admin.adminson@example.com',
+        firstName: 'Admin',
+        lastName: 'Adminson',
+        role: 'admin',
+        secret: PasswordService.generateSecret()
+    },
+    {
+        id: 2,
         email: 'user.userson@example.com',
         firstName: 'User',
         lastName: 'Userson',
         role: 'user',
         secret: "user-secret"
-    },
-    {
-        id: 2,
-        email: 'admin.adminson@example.com',
-        firstName: 'Admin',
-        lastName: 'Adminson',
-        role: 'admin',
-        secret: "admin-secret"
     }
 ];
 
 const authDetails: LoginResult[] = [
     {
-        username: 'user',
-        password: 'password',
+        username: 'admin',
+        password: PasswordService.generateStrongPassword(),
         id: 1
     },
     {
-        username: 'admin',
-        password: PasswordService.generateStrongPassword(),
+        username: 'user',
+        password: 'password',
         id: 2
     }
 ];

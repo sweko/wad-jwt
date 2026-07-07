@@ -70,6 +70,16 @@ export const PasswordService = {
         return PasswordService.schwartzianShuffle(password).join("");
     },
 
+    generateSecret(): string {
+        return PasswordService.generateStrongPassword({
+            minLength: 20,
+            lowercaseRequired: true,
+            uppercaseRequired: false,
+            numberRequired: false,
+            symbolRequired: false
+        });
+    },
+
     schwartzianShuffle<T>(array: T[]): T[] {
         const poolSize = array.length;
         const pool = randomBytes(poolSize).toJSON().data;

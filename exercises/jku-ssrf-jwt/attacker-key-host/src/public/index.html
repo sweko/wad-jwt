@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attacker Key Host — Token Forge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1><span class="prompt">root@attacker-key-host</span><span class="path">:~$</span> ./forge<span class="cursor">_</span></h1>
+        <p class="subtitle"># local-only tool. paste a token to copy its payload, edit it, then sign a new
+            one with this host's own key. only <code>/.well-known/jwks.json</code> is meant to ever be
+            internet-facing — this signing UI reads the private key from disk and must never be deployed
+            publicly.</p>
+    </header>
+
+    <main>
+        <section class="panel" id="decode-panel">
+            <h2>[ 01 ] harvest a payload</h2>
+
+            <label for="source-token">&gt; existing jwt</label>
+            <textarea id="source-token" rows="4" placeholder="paste any JWT here to copy its payload..."></textarea>
+            <button id="decode-button">decode()</button>
+
+            <label for="source-header">&gt; decoded header <span class="hint">(reference only — the forged
+                token always uses this host's own kid/jku, not whatever's here)</span></label>
+            <textarea id="source-header" rows="3" readonly></textarea>
+        </section>
+
+        <section class="panel" id="forge-panel">
+            <h2>[ 02 ] tamper &amp; sign</h2>
+
+            <label for="payload-json">&gt; payload.json <span class="hint">(edit freely — id, role, whatever
+                the target app trusts)</span></label>
+            <textarea id="payload-json" rows="8">{
+  "id": 1,
+  "email": "admin.adminson@example.com",
+  "firstName": "Admin",
+  "lastName": "Adminson",
+  "role": "admin"
+}</textarea>
+            <button id="forge-button">forge()</button>
+
+            <label for="forged-token">&gt; forged token <span class="hint">(set this as the "jwt" cookie on
+                the target app)</span></label>
+            <textarea id="forged-token" rows="4" readonly></textarea>
+
+            <label>&gt; header used to sign it</label>
+            <pre id="forged-header">-</pre>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

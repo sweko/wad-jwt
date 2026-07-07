@@ -1,0 +1,171 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --green: #33ff66;
+    --green-dim: #1f9c46;
+    --green-glow: rgba(51, 255, 102, 0.55);
+    --bg: #050705;
+    --bg-panel: #0a0f0a;
+}
+
+body {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: var(--bg);
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            rgba(51, 255, 102, 0.035) 0px,
+            rgba(51, 255, 102, 0.035) 1px,
+            transparent 1px,
+            transparent 3px
+        );
+    color: var(--green);
+    margin: 0;
+    padding: 2rem;
+    text-shadow: 0 0 2px var(--green-glow);
+}
+
+header {
+    max-width: 900px;
+    margin: 0 auto 2rem;
+    border-bottom: 1px dashed var(--green-dim);
+    padding-bottom: 1rem;
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 6px var(--green-glow), 0 0 12px var(--green-glow);
+}
+
+.prompt {
+    color: var(--green);
+}
+
+.path {
+    color: var(--green-dim);
+}
+
+.cursor {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+}
+
+.subtitle {
+    color: var(--green-dim);
+    margin-top: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.subtitle code {
+    color: var(--green);
+    background: rgba(51, 255, 102, 0.08);
+    padding: 0 0.25rem;
+}
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--green-dim);
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 0 12px rgba(51, 255, 102, 0.12), inset 0 0 20px rgba(51, 255, 102, 0.03);
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    color: var(--green);
+    text-shadow: 0 0 6px var(--green-glow);
+}
+
+label {
+    display: block;
+    margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--green-dim);
+}
+
+textarea, button {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+    border-radius: 2px;
+    border: 1px solid var(--green-dim);
+    background: #000;
+    color: var(--green);
+    caret-color: var(--green);
+}
+
+textarea {
+    resize: vertical;
+}
+
+textarea:focus, button:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 8px var(--green-glow);
+}
+
+textarea[readonly] {
+    color: var(--green-dim);
+    background: #030503;
+}
+
+textarea::placeholder {
+    color: var(--green-dim);
+    opacity: 0.6;
+}
+
+.hint {
+    font-style: italic;
+    color: var(--green-dim);
+    opacity: 0.8;
+}
+
+button {
+    margin-top: 0.75rem;
+    background: #000;
+    border: 1px solid var(--green);
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+button:hover {
+    background: var(--green);
+    color: #000;
+    text-shadow: none;
+}
+
+pre {
+    background: #000;
+    border: 1px solid var(--green-dim);
+    border-radius: 2px;
+    padding: 0.75rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-size: 0.85rem;
+    color: var(--green-dim);
+}

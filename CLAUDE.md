@@ -35,10 +35,10 @@ race to find them all).
 | Pillar | Status | Notes |
 |---|---|---|
 | Algorithm confusion / `alg: none` | Base repo has `make-unsigned` | Need a naive verifier to attack |
-| JWKS / key attacks (new depth) | Not started | `jku`/`x5u` header injection, `kid` path traversal / SQLi — need minimal JWKS-serving piece + `kid`-trusting verifier |
+| JWKS / key attacks (new depth) | Built — two labs, one per attack variant | **`exercises/kid-injection-jwt/`**: `kid` path traversal. `kid` header used unsanitized as a filename under `keys/`; attacker points it at `../package.json` (or anything else with knowable content) to control the HMAC secret. Port 3004.<br>**`exercises/jku-ssrf-jwt/`**: `jku` SSRF, arguably the easier one to exploit live — no need to guess file contents, attacker just hosts their own key. Server fetches whatever URL the token's `jku` header names with no host allowlist, so a token signed with a self-generated RSA key verifies fine as long as `jku` points at a JWK set containing the matching public key. Companion `attacker-key-host/` app (port 3006) lets attendees generate their own keypair (`npm run generate-keys`), serve it, and forge a token against it (`npm run forge`) end-to-end, locally. Port 3005 for the vulnerable app. Crypto flow verified in a standalone simulation before landing (legit token verifies against server's real key; forged token verifies against attacker's key; forged token does NOT verify against server's key). |
 | Sensitive data in payload | `sensitivePayload` exists in `data.ts` | Just needs a decode-live demo |
 | Expiration / refresh tokens | Not started | Nothing in base repo touches `exp`, `nbf`, or refresh flow. Needs reuse-detection exercise (replay a used refresh token, attendees implement "burn the whole family") |
-| Cross-service trust / confused deputy (optional 6th pillar) | Not started | Token passthrough scenario |
+| Cross-service trust / confused deputy (optional 6th pillar) | Not started | Token passthrough scenario. Two JWKS-attack labs may already be plenty for one block — revisit whether this pillar is still needed once facilitator notes/timing are drafted |
 
 ## Repo layout
 
@@ -57,6 +57,17 @@ just files. GitHub still hosts the original standalone repos if old history is e
   `localhost:3000`.
 - `exercises/` — per-lab companion projects:
   - `algo-check/` — Express app w/ `src/utils/jwt.ts` for the alg-confusion lab
+  - `kid-injection-jwt/` — Express app w/ `src/utils/jwt.ts` for the `kid` path-traversal lab.
+    `kid` header trusted as a raw filename under `keys/` with no sanitization — attacker points
+    it at `../package.json` (or anything else with knowable bytes) to control the HMAC secret.
+    Port 3004.
+  - `jku-ssrf-jwt/` — Express app w/ `src/utils/jwt.ts` (RS256) for the `jku` SSRF lab. `jku`
+    header names a URL the server fetches with no allowlist of trusted hosts, then trusts
+    whatever JWK set comes back. Own legit key lives at `keys/rsa-{private,public}.pem`, own
+    JWKS served at `/.well-known/jwks.json`. Port 3005. Companion `attacker-key-host/` sub-app
+    (port 3006, its own package.json) gives attendees `npm run generate-keys` (fresh RSA
+    keypair + JWK set) and `npm run forge` (builds + signs a forged token pointing `jku` back
+    at itself) — a fully local, runnable exploit chain, no real internet exposure needed.
   - `expiry-management-jwt/` — Express app w/ `src/utils/verifications.ts` for the expiry/refresh lab
   - `integrating-jwt/` — appears to be the integration/capstone-style app (has anon/logged-in pages)
 
@@ -70,7 +81,7 @@ during a live demo — e.g. one naive verifier, one fixed, one deliberately-brok
       cross-pillar teaching tool, not tied to one lab
 - [ ] Add companion `verify-*.ts` scripts to `generating-jwt` (or per-exercise) — naive / fixed /
       deliberately-broken per lab
-- [ ] Build JWKS-serving + `kid`-trusting verifier for the key-injection lab
+- [x] Build JWKS-serving + `kid`-trusting verifier for the key-injection lab
 - [ ] Build expiration/refresh-token logic incl. reuse-detection exercise
 - [ ] Build the opening warmup (realistic redacted JWT with an inspectable flaw)
 - [ ] Build the closing capstone service with multiple stacked, intentional bugs

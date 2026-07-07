@@ -14,8 +14,12 @@ function hmac(data: string, secret: string, algorithm: string): string {
     .digest('base64');
 }
 
+function getKey(): string {
+  return process.env.JWT_SECRET || 'we-love-developers';
+}
+
 export async function generateJwt<T>(payload: T): Promise<string> {
-  const secretKey = process.env.JWT_SECRET || 'we-love-what-the-stack';
+  const secretKey = getKey();
   const algorithm = 'sha256';
 
   const header = {
@@ -42,7 +46,7 @@ const verifications: Record<string, (token: string, keys: any) => boolean> = {
 
 export function verifyJwt<T>(token: string): VerificationResult<T> {
   const [headerB64, payloadB64, signatureB64] = token.split('.');
-  const secretKey = process.env.JWT_SECRET || 'we-love-what-the-stack';
+  const secretKey = getKey();
 
   if (!headerB64 || !payloadB64 || !signatureB64) {
     return { status: 'failed' };

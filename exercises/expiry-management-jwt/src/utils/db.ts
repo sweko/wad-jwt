@@ -1,4 +1,5 @@
 import { Login, LoginResult, User } from "./user";
+import { PasswordService } from "./password";
 
 export const users : User[] = [
     {
@@ -27,7 +28,7 @@ const authDetails: LoginResult[] = [
     },
     {
         username: 'admin',
-        password: process.env.ADMIN_PASSWORD || 'admin',
+        password: PasswordService.generateStrongPassword(),
         id: 2
     }
 ];

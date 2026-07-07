@@ -2,7 +2,7 @@ import express from 'express';
 import { generateJwt, verifyJwt } from '../utils/jwt';
 import { Login, User } from '../utils/user';
 import { authenticate, users } from '../utils/db';
-import { omit } from '../utils/utils';
+import { omit, setJwtCookie } from '../utils/utils';
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ router.get('/me', async (req, res) => {
       // we need to refresh the token
       console.log('Token expired, refreshing the token'); 
       const refreshedToken = await generateJwt(verification.payload);
-      res.header('Set-Cookie', `jwt=${refreshedToken}; HttpOnly`);
+      setJwtCookie(req, res, refreshedToken);
       const check = verifyJwt<User>(refreshedToken);
       return res.send(check.payload);
     }
@@ -44,7 +44,7 @@ router.get('/secret', async (req, res) => {
       // we need to refresh the token
       console.log('Token expired, refreshing the token'); 
       const refreshedToken = await generateJwt(verification.payload);
-      res.header('Set-Cookie', `jwt=${refreshedToken}; HttpOnly`);
+      setJwtCookie(req, res, refreshedToken);
     } else {
       return res.status(403).json({ error: 'Verification failed' });
     }
@@ -65,7 +65,7 @@ router.post('/login', async (req, res) => {
     }
 
     const token = await generateJwt(omit(user, "secret"));
-    res.header('Set-Cookie', `jwt=${token}; HttpOnly`);
+    setJwtCookie(req, res, token);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ error: 'Failed to generate JWT' });

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireWaltz Login Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="banner">
+        <span class="brand">FireWaltz</span>
+    </div>
+    <div class="sub-banner">
+        Trusting a jku header to fetch the right key
+    </div>
+
+    <main class="stage">
+        <div class="login-container" id="login-container">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <rect x="4" y="11" width="16" height="9" rx="2"></rect>
+                    <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+                </svg>
+            </div>
+            <h2>Hack me if you can</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="text" id="username" required placeholder=" " autocomplete="username">
+                    <label for="username">Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" required placeholder=" " autocomplete="current-password">
+                    <label for="password">Password</label>
+                </div>
+                <button id="login-button">Log In</button>
+            </form>
+        </div>
+
+        <div class="login-container terminal" id="anon-container">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <path d="M12 3 2 20h20L12 3Z"></path>
+                    <path d="M12 10v4"></path>
+                    <path d="M12 17.5h.01"></path>
+                </svg>
+            </div>
+            <h2>Hack me if you can</h2>
+            <div class="terminal-text">
+                We don't keep our keys to ourselves - we go fetch them from wherever a token
+                tells us to look. Host your own. We'll come knocking. That login form? Purely
+                light side stuff. Let the anger and the outbound HTTP requests flow through you.
+            </div>
+        </div>
+
+        <div class="login-container" id="logged-container">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="m8 12.5 2.5 2.5L16 9.5"></path>
+                </svg>
+            </div>
+            <h2 id="user-title">Welcome, #firstName #lastName.</h2>
+            <div id="user-details">
+                You are logged in as a #role. Your email is #email, and your secret information is #secret
+            </div>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -24,11 +24,15 @@ combining multiple stacked bugs in one broken auth service.
   any token to see its **decoded** header/payload (always readable, no key needed) next to its
   **verification** result (a real signature check) — useful across every pillar, not tied to one
   lab.
-- [exercises/](exercises/) — per-lab hands-on projects:
-  - [algo-check/](exercises/algo-check/) — algorithm confusion / `alg: none` lab
+- [exercises/](exercises/) — per-lab hands-on projects, listed in port order (the order to run
+  them in):
+  - [integrating-jwt/](exercises/integrating-jwt/) — JWT integration lab (port 3001)
+  - [algo-check/](exercises/algo-check/) — algorithm confusion / `alg: none` lab (port 3002)
   - [expiry-management-jwt/](exercises/expiry-management-jwt/) — token expiration & refresh-token
-    reuse lab
-  - [integrating-jwt/](exercises/integrating-jwt/) — JWT integration lab
+    reuse lab (port 3003)
+  - [kid-injection-jwt/](exercises/kid-injection-jwt/) — `kid` header path-traversal lab (port 3004)
+  - [jku-ssrf-jwt/](exercises/jku-ssrf-jwt/) — `jku` header SSRF lab (port 3005), plus a companion
+    `attacker-key-host/` app (port 3006) for forging tokens against a self-hosted key
 
 Each project is an independent Node.js/TypeScript package with its own `package.json`.
 
@@ -63,11 +67,6 @@ npm run start   # run the compiled build
 
 - Node.js 16+
 - npm
-
-## Status
-
-This workshop is under active development. See [CLAUDE.md](CLAUDE.md) for the detailed build
-plan, per-pillar status, and outstanding work.
 
 ## License
 
